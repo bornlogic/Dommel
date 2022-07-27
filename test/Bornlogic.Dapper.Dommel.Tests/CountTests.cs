@@ -10,14 +10,14 @@ namespace Dommel.Tests
         [Fact]
         public void GeneratesCountAllSql()
         {
-            var sql = BuildCountAllSql(SqlBuilder, typeof(Foo));
+            var sql = BuildCountAllSql(SqlBuilder, typeof(Foo), new DefaultTableNameResolver());
             Assert.Equal("select count(*) from [Foos]", sql);
         }
 
         [Fact]
         public void GeneratesCountSql()
         {
-            var sql = BuildCountSql<Foo>(SqlBuilder, x => x.Bar == "Baz", out var parameters);
+            var sql = BuildCountSql<Foo>(SqlBuilder, x => x.Bar == "Baz", new DefaultTableNameResolver(), out var parameters);
             Assert.Equal("select count(*) from [Foos] where ([Bar] = @p1)", sql);
             Assert.Single(parameters.ParameterNames);
         }

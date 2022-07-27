@@ -10,14 +10,14 @@ namespace Dommel.Tests
         [Fact]
         public void GeneratesAnyAllSql()
         {
-            var sql = BuildAnyAllSql(SqlBuilder, typeof(Foo));
+            var sql = BuildAnyAllSql(SqlBuilder, typeof(Foo), new DefaultTableNameResolver());
             Assert.Equal($"select 1 from [Foos] {SqlBuilder.LimitClause(1)}", sql);
         }
 
         [Fact]
         public void GeneratesAnySql()
         {
-            var sql = BuildAnySql<Foo>(SqlBuilder, x => x.Bar == "Baz", out var parameters);
+            var sql = BuildAnySql<Foo>(SqlBuilder, x => x.Bar == "Baz", new DefaultTableNameResolver(), out var parameters);
             Assert.Equal($"select 1 from [Foos] where ([Bar] = @p1) {SqlBuilder.LimitClause(1)}", sql);
             Assert.Single(parameters.ParameterNames);
         }

@@ -10,15 +10,15 @@ namespace Dommel.Tests
         [Fact]
         public void Table_WithSchema()
         {
-            Assert.Equal("[dbo].[Qux]", Resolvers.Table(typeof(FooQux), _sqlBuilder));
-            Assert.Equal("[foo].[dbo].[Qux]", Resolvers.Table(typeof(FooDboQux), _sqlBuilder));
+            Assert.Equal("[dbo].[Qux]", Resolvers.Table(typeof(FooQux), _sqlBuilder, new DefaultTableNameResolver()));
+            Assert.Equal("[foo].[dbo].[Qux]", Resolvers.Table(typeof(FooDboQux), _sqlBuilder, new DefaultTableNameResolver()));
         }
 
         [Fact]
         public void Table_NoCacheConflictNestedClass()
         {
-            Assert.Equal("[BarA]", Resolvers.Table(typeof(Foo.Bar), _sqlBuilder));
-            Assert.Equal("[BarB]", Resolvers.Table(typeof(Baz.Bar), _sqlBuilder));
+            Assert.Equal("[BarA]", Resolvers.Table(typeof(Foo.Bar), _sqlBuilder, new DefaultTableNameResolver()));
+            Assert.Equal("[BarB]", Resolvers.Table(typeof(Baz.Bar), _sqlBuilder, new DefaultTableNameResolver()));
         }
 
         [Fact]

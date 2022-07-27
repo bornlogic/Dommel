@@ -20,7 +20,7 @@ namespace Dommel
         /// <param name="id">The id of the entity in the database.</param>
         /// <param name="transaction">Optional transaction for the command.</param>
         /// <returns>The entity with the corresponding id joined with the specified types.</returns>
-        public static TReturn Get<T1, T2, TReturn>(this IDbConnection connection, object id, IDbTransaction? transaction = null)
+        public static TReturn Get<T1, T2, TReturn>(this IDbConnection connection, object id, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null)
             where T1 : class, TReturn
             where TReturn : class
         {
@@ -29,6 +29,7 @@ namespace Dommel
                 connection,
                 CreateMapDelegate<T1, T2, DontMap, DontMap, DontMap, DontMap, DontMap, TReturn>(results),
                 id,
+                tableNameResolver,
                 transaction);
             return results.Values.FirstOrDefault();
         }
@@ -44,7 +45,7 @@ namespace Dommel
         /// <param name="id">The id of the entity in the database.</param>
         /// <param name="transaction">Optional transaction for the command.</param>
         /// <returns>The entity with the corresponding id joined with the specified types.</returns>
-        public static async Task<TReturn> GetAsync<T1, T2, TReturn>(this IDbConnection connection, object id, IDbTransaction? transaction = null)
+        public static async Task<TReturn> GetAsync<T1, T2, TReturn>(this IDbConnection connection, object id, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null)
             where T1 : class, TReturn
             where TReturn : class
         {
@@ -53,6 +54,7 @@ namespace Dommel
                 connection,
                 CreateMapDelegate<T1, T2, DontMap, DontMap, DontMap, DontMap, DontMap, TReturn>(results),
                 id,
+                tableNameResolver,
                 transaction);
             return results.Values.FirstOrDefault();
         }
@@ -69,7 +71,7 @@ namespace Dommel
         /// <param name="id">The id of the entity in the database.</param>
         /// <param name="transaction">Optional transaction for the command.</param>
         /// <returns>The entity with the corresponding id joined with the specified types.</returns>
-        public static TReturn Get<T1, T2, T3, TReturn>(this IDbConnection connection, object id, IDbTransaction? transaction = null)
+        public static TReturn Get<T1, T2, T3, TReturn>(this IDbConnection connection, object id, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null)
             where T1 : class, TReturn
             where TReturn : class
         {
@@ -78,6 +80,7 @@ namespace Dommel
                 connection,
                 CreateMapDelegate<T1, T2, T3, DontMap, DontMap, DontMap, DontMap, TReturn>(results),
                 id,
+                tableNameResolver,
                 transaction);
             return results.Values.FirstOrDefault();
         }
@@ -94,7 +97,7 @@ namespace Dommel
         /// <param name="id">The id of the entity in the database.</param>
         /// <param name="transaction">Optional transaction for the command.</param>
         /// <returns>The entity with the corresponding id joined with the specified types.</returns>
-        public static async Task<TReturn> GetAsync<T1, T2, T3, TReturn>(this IDbConnection connection, object id, IDbTransaction? transaction = null)
+        public static async Task<TReturn> GetAsync<T1, T2, T3, TReturn>(this IDbConnection connection, object id, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null)
             where T1 : class, TReturn
             where TReturn : class
         {
@@ -103,6 +106,7 @@ namespace Dommel
                 connection,
                 CreateMapDelegate<T1, T2, T3, DontMap, DontMap, DontMap, DontMap, TReturn>(results),
                 id,
+                tableNameResolver,
                 transaction);
             return results.Values.FirstOrDefault();
         }
@@ -120,7 +124,7 @@ namespace Dommel
         /// <param name="id">The id of the entity in the database.</param>
         /// <param name="transaction">Optional transaction for the command.</param>
         /// <returns>The entity with the corresponding id joined with the specified types.</returns>
-        public static TReturn Get<T1, T2, T3, T4, TReturn>(this IDbConnection connection, object id, IDbTransaction? transaction = null)
+        public static TReturn Get<T1, T2, T3, T4, TReturn>(this IDbConnection connection, object id, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null)
             where T1 : class, TReturn
             where TReturn : class
         {
@@ -129,6 +133,7 @@ namespace Dommel
                 connection,
                 CreateMapDelegate<T1, T2, T3, T4, DontMap, DontMap, DontMap, TReturn>(results),
                 id,
+                tableNameResolver,
                 transaction);
             return results.Values.FirstOrDefault();
         }
@@ -146,7 +151,7 @@ namespace Dommel
         /// <param name="id">The id of the entity in the database.</param>
         /// <param name="transaction">Optional transaction for the command.</param>
         /// <returns>The entity with the corresponding id joined with the specified types.</returns>
-        public static async Task<TReturn> GetAsync<T1, T2, T3, T4, TReturn>(this IDbConnection connection, object id, IDbTransaction? transaction = null)
+        public static async Task<TReturn> GetAsync<T1, T2, T3, T4, TReturn>(this IDbConnection connection, object id, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null)
             where T1 : class, TReturn
             where TReturn : class
         {
@@ -155,6 +160,7 @@ namespace Dommel
                 connection,
                 CreateMapDelegate<T1, T2, T3, T4, DontMap, DontMap, DontMap, TReturn>(results),
                 id,
+                tableNameResolver,
                 transaction);
             return results.Values.FirstOrDefault();
         }
@@ -173,7 +179,7 @@ namespace Dommel
         /// <param name="id">The id of the entity in the database.</param>
         /// <param name="transaction">Optional transaction for the command.</param>
         /// <returns>The entity with the corresponding id joined with the specified types.</returns>
-        public static TReturn Get<T1, T2, T3, T4, T5, TReturn>(this IDbConnection connection, object id, IDbTransaction? transaction = null)
+        public static TReturn Get<T1, T2, T3, T4, T5, TReturn>(this IDbConnection connection, object id, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null)
             where T1 : class, TReturn
             where TReturn : class
         {
@@ -182,6 +188,7 @@ namespace Dommel
                 connection,
                 CreateMapDelegate<T1, T2, T3, T4, T5, DontMap, DontMap, TReturn>(results),
                 id,
+                tableNameResolver,
                 transaction);
             return results.Values.FirstOrDefault();
         }
@@ -200,7 +207,7 @@ namespace Dommel
         /// <param name="id">The id of the entity in the database.</param>
         /// <param name="transaction">Optional transaction for the command.</param>
         /// <returns>The entity with the corresponding id joined with the specified types.</returns>
-        public static async Task<TReturn> GetAsync<T1, T2, T3, T4, T5, TReturn>(this IDbConnection connection, object id, IDbTransaction? transaction = null)
+        public static async Task<TReturn> GetAsync<T1, T2, T3, T4, T5, TReturn>(this IDbConnection connection, object id, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null)
             where T1 : class, TReturn
             where TReturn : class
         {
@@ -209,6 +216,7 @@ namespace Dommel
                 connection,
                 CreateMapDelegate<T1, T2, T3, T4, T5, DontMap, DontMap, TReturn>(results),
                 id,
+                tableNameResolver,
                 transaction);
             return results.Values.FirstOrDefault();
         }
@@ -228,7 +236,7 @@ namespace Dommel
         /// <param name="id">The id of the entity in the database.</param>
         /// <param name="transaction">Optional transaction for the command.</param>
         /// <returns>The entity with the corresponding id joined with the specified types.</returns>
-        public static TReturn Get<T1, T2, T3, T4, T5, T6, TReturn>(this IDbConnection connection, object id, IDbTransaction? transaction = null)
+        public static TReturn Get<T1, T2, T3, T4, T5, T6, TReturn>(this IDbConnection connection, object id, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null)
             where T1 : class, TReturn
             where TReturn : class
         {
@@ -237,6 +245,7 @@ namespace Dommel
                 connection,
                 CreateMapDelegate<T1, T2, T3, T4, T5, T6, DontMap, TReturn>(results),
                 id,
+                tableNameResolver,
                 transaction);
             return results.Values.FirstOrDefault();
         }
@@ -256,7 +265,7 @@ namespace Dommel
         /// <param name="id">The id of the entity in the database.</param>
         /// <param name="transaction">Optional transaction for the command.</param>
         /// <returns>The entity with the corresponding id joined with the specified types.</returns>
-        public static async Task<TReturn> GetAsync<T1, T2, T3, T4, T5, T6, TReturn>(this IDbConnection connection, object id, IDbTransaction? transaction = null)
+        public static async Task<TReturn> GetAsync<T1, T2, T3, T4, T5, T6, TReturn>(this IDbConnection connection, object id, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null)
             where T1 : class, TReturn
             where TReturn : class
         {
@@ -265,6 +274,7 @@ namespace Dommel
                 connection,
                 CreateMapDelegate<T1, T2, T3, T4, T5, T6, DontMap, TReturn>(results),
                 id,
+                tableNameResolver,
                 transaction);
             return results.Values.FirstOrDefault();
         }
@@ -285,7 +295,7 @@ namespace Dommel
         /// <param name="id">The id of the entity in the database.</param>
         /// <param name="transaction">Optional transaction for the command.</param>
         /// <returns>The entity with the corresponding id joined with the specified types.</returns>
-        public static TReturn Get<T1, T2, T3, T4, T5, T6, T7, TReturn>(this IDbConnection connection, object id, IDbTransaction? transaction = null)
+        public static TReturn Get<T1, T2, T3, T4, T5, T6, T7, TReturn>(this IDbConnection connection, object id, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null)
             where T1 : class, TReturn
             where TReturn : class
         {
@@ -294,6 +304,7 @@ namespace Dommel
                 connection,
                 CreateMapDelegate<T1, T2, T3, T4, T5, T6, T7, TReturn>(results),
                 id,
+                tableNameResolver,
                 transaction);
             return results.Values.FirstOrDefault();
         }
@@ -314,7 +325,7 @@ namespace Dommel
         /// <param name="id">The id of the entity in the database.</param>
         /// <param name="transaction">Optional transaction for the command.</param>
         /// <returns>The entity with the corresponding id joined with the specified types.</returns>
-        public static async Task<TReturn> GetAsync<T1, T2, T3, T4, T5, T6, T7, TReturn>(this IDbConnection connection, object id, IDbTransaction? transaction = null)
+        public static async Task<TReturn> GetAsync<T1, T2, T3, T4, T5, T6, T7, TReturn>(this IDbConnection connection, object id, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null)
             where T1 : class, TReturn
             where TReturn : class
         {
@@ -323,6 +334,7 @@ namespace Dommel
                 connection,
                 CreateMapDelegate<T1, T2, T3, T4, T5, T6, T7, TReturn>(results),
                 id,
+                tableNameResolver,
                 transaction);
             return results.Values.FirstOrDefault();
         }
@@ -341,7 +353,7 @@ namespace Dommel
         /// or when the query is materialized (using <c>ToList()</c> for example).
         /// </param>
         /// <returns>The entity with the corresponding id joined with the specified types.</returns>
-        public static IEnumerable<TReturn> GetAll<T1, T2, TReturn>(this IDbConnection connection, IDbTransaction? transaction = null, bool buffered = true)
+        public static IEnumerable<TReturn> GetAll<T1, T2, TReturn>(this IDbConnection connection, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null, bool buffered = true)
             where T1 : class, TReturn
         {
             var results = new Dictionary<int, T1>();
@@ -349,6 +361,7 @@ namespace Dommel
                 connection,
                 CreateMapDelegate<T1, T2, DontMap, DontMap, DontMap, DontMap, DontMap, TReturn>(results),
                 id: null,
+                tableNameResolver,
                 transaction,
                 buffered);
             return results.Values;
@@ -368,7 +381,7 @@ namespace Dommel
         /// or when the query is materialized (using <c>ToList()</c> for example).
         /// </param>
         /// <returns>The entity with the corresponding id joined with the specified types.</returns>
-        public static async Task<IEnumerable<TReturn>> GetAllAsync<T1, T2, TReturn>(this IDbConnection connection, IDbTransaction? transaction = null, bool buffered = true)
+        public static async Task<IEnumerable<TReturn>> GetAllAsync<T1, T2, TReturn>(this IDbConnection connection, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null, bool buffered = true)
             where T1 : class, TReturn
         {
             var results = new Dictionary<int, T1>();
@@ -376,6 +389,7 @@ namespace Dommel
                 connection,
                 CreateMapDelegate<T1, T2, DontMap, DontMap, DontMap, DontMap, DontMap, TReturn>(results),
                 id: null,
+                tableNameResolver,
                 transaction,
                 buffered);
             return results.Values;
@@ -396,7 +410,7 @@ namespace Dommel
         /// or when the query is materialized (using <c>ToList()</c> for example).
         /// </param>
         /// <returns>The entity with the corresponding id joined with the specified types.</returns>
-        public static IEnumerable<TReturn> GetAll<T1, T2, T3, TReturn>(this IDbConnection connection, IDbTransaction? transaction = null, bool buffered = true)
+        public static IEnumerable<TReturn> GetAll<T1, T2, T3, TReturn>(this IDbConnection connection, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null, bool buffered = true)
             where T1 : class, TReturn
         {
             var results = new Dictionary<int, T1>();
@@ -404,6 +418,7 @@ namespace Dommel
                 connection,
                 CreateMapDelegate<T1, T2, T3, DontMap, DontMap, DontMap, DontMap, TReturn>(results),
                 id: null,
+                tableNameResolver,
                 transaction,
                 buffered);
             return results.Values;
@@ -424,7 +439,7 @@ namespace Dommel
         /// or when the query is materialized (using <c>ToList()</c> for example).
         /// </param>
         /// <returns>The entity with the corresponding id joined with the specified types.</returns>
-        public static async Task<IEnumerable<TReturn>> GetAllAsync<T1, T2, T3, TReturn>(this IDbConnection connection, IDbTransaction? transaction = null, bool buffered = true)
+        public static async Task<IEnumerable<TReturn>> GetAllAsync<T1, T2, T3, TReturn>(this IDbConnection connection, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null, bool buffered = true)
             where T1 : class, TReturn
         {
             var results = new Dictionary<int, T1>();
@@ -432,6 +447,7 @@ namespace Dommel
                 connection,
                 CreateMapDelegate<T1, T2, T3, DontMap, DontMap, DontMap, DontMap, TReturn>(results),
                 id: null,
+                tableNameResolver,
                 transaction,
                 buffered);
             return results.Values;
@@ -453,7 +469,7 @@ namespace Dommel
         /// or when the query is materialized (using <c>ToList()</c> for example).
         /// </param>
         /// <returns>The entity with the corresponding id joined with the specified types.</returns>
-        public static IEnumerable<TReturn> GetAll<T1, T2, T3, T4, TReturn>(this IDbConnection connection, IDbTransaction? transaction = null, bool buffered = true)
+        public static IEnumerable<TReturn> GetAll<T1, T2, T3, T4, TReturn>(this IDbConnection connection, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null, bool buffered = true)
             where T1 : class, TReturn
         {
             var results = new Dictionary<int, T1>();
@@ -461,6 +477,7 @@ namespace Dommel
                 connection,
                 CreateMapDelegate<T1, T2, T3, T4, DontMap, DontMap, DontMap, TReturn>(results),
                 id: null,
+                tableNameResolver,
                 transaction,
                 buffered);
             return results.Values;
@@ -482,7 +499,7 @@ namespace Dommel
         /// or when the query is materialized (using <c>ToList()</c> for example).
         /// </param>
         /// <returns>The entity with the corresponding id joined with the specified types.</returns>
-        public static async Task<IEnumerable<TReturn>> GetAllAsync<T1, T2, T3, T4, TReturn>(this IDbConnection connection, IDbTransaction? transaction = null, bool buffered = true)
+        public static async Task<IEnumerable<TReturn>> GetAllAsync<T1, T2, T3, T4, TReturn>(this IDbConnection connection, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null, bool buffered = true)
             where T1 : class, TReturn
         {
             var results = new Dictionary<int, T1>();
@@ -490,6 +507,7 @@ namespace Dommel
                 connection,
                 CreateMapDelegate<T1, T2, T3, T4, DontMap, DontMap, DontMap, TReturn>(results),
                 id: null,
+                tableNameResolver,
                 transaction,
                 buffered);
             return results.Values;
@@ -512,7 +530,7 @@ namespace Dommel
         /// or when the query is materialized (using <c>ToList()</c> for example).
         /// </param>
         /// <returns>The entity with the corresponding id joined with the specified types.</returns>
-        public static IEnumerable<TReturn> GetAll<T1, T2, T3, T4, T5, TReturn>(this IDbConnection connection, IDbTransaction? transaction = null, bool buffered = true)
+        public static IEnumerable<TReturn> GetAll<T1, T2, T3, T4, T5, TReturn>(this IDbConnection connection, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null, bool buffered = true)
             where T1 : class, TReturn
         {
             var results = new Dictionary<int, T1>();
@@ -520,6 +538,7 @@ namespace Dommel
                 connection,
                 CreateMapDelegate<T1, T2, T3, T4, T5, DontMap, DontMap, TReturn>(results),
                 id: null,
+                tableNameResolver, 
                 transaction,
                 buffered);
             return results.Values;
@@ -542,7 +561,7 @@ namespace Dommel
         /// or when the query is materialized (using <c>ToList()</c> for example).
         /// </param>
         /// <returns>The entity with the corresponding id joined with the specified types.</returns>
-        public static async Task<IEnumerable<TReturn>> GetAllAsync<T1, T2, T3, T4, T5, TReturn>(this IDbConnection connection, IDbTransaction? transaction = null, bool buffered = true)
+        public static async Task<IEnumerable<TReturn>> GetAllAsync<T1, T2, T3, T4, T5, TReturn>(this IDbConnection connection, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null, bool buffered = true)
             where T1 : class, TReturn
         {
             var results = new Dictionary<int, T1>();
@@ -550,6 +569,7 @@ namespace Dommel
                 connection,
                 CreateMapDelegate<T1, T2, T3, T4, T5, DontMap, DontMap, TReturn>(results),
                 id: null,
+                tableNameResolver,
                 transaction,
                 buffered);
             return results.Values;
@@ -574,14 +594,14 @@ namespace Dommel
         /// or when the query is materialized (using <c>ToList()</c> for example).
         /// </param>
         /// <returns>The entity with the corresponding id joined with the specified types.</returns>
-        public static IEnumerable<TReturn> GetAll<T1, T2, T3, T4, T5, T6, TReturn>(this IDbConnection connection, IDbTransaction? transaction = null, bool buffered = true)
+        public static IEnumerable<TReturn> GetAll<T1, T2, T3, T4, T5, T6, TReturn>(this IDbConnection connection, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null, bool buffered = true)
             where T1 : class, TReturn
         {
             var results = new Dictionary<int, T1>();
             _ = MultiMap<T1, T2, T3, T4, T5, T6, DontMap, TReturn>(
                 connection,
                 CreateMapDelegate<T1, T2, T3, T4, T5, T6, DontMap, TReturn>(results),
-                id: null,
+                id: null, tableNameResolver,
                 transaction,
                 buffered);
             return results.Values;
@@ -605,7 +625,7 @@ namespace Dommel
         /// or when the query is materialized (using <c>ToList()</c> for example).
         /// </param>
         /// <returns>The entity with the corresponding id joined with the specified types.</returns>
-        public static async Task<IEnumerable<TReturn>> GetAllAsync<T1, T2, T3, T4, T5, T6, TReturn>(this IDbConnection connection, IDbTransaction? transaction = null, bool buffered = true)
+        public static async Task<IEnumerable<TReturn>> GetAllAsync<T1, T2, T3, T4, T5, T6, TReturn>(this IDbConnection connection, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null, bool buffered = true)
             where T1 : class, TReturn
         {
             var results = new Dictionary<int, T1>();
@@ -613,6 +633,7 @@ namespace Dommel
                 connection,
                 CreateMapDelegate<T1, T2, T3, T4, T5, T6, DontMap, TReturn>(results),
                 id: null,
+                tableNameResolver,
                 transaction,
                 buffered);
             return results.Values;
@@ -637,7 +658,7 @@ namespace Dommel
         /// or when the query is materialized (using <c>ToList()</c> for example).
         /// </param>
         /// <returns>The entity with the corresponding id joined with the specified types.</returns>
-        public static IEnumerable<TReturn> GetAll<T1, T2, T3, T4, T5, T6, T7, TReturn>(this IDbConnection connection, IDbTransaction? transaction = null, bool buffered = true)
+        public static IEnumerable<TReturn> GetAll<T1, T2, T3, T4, T5, T6, T7, TReturn>(this IDbConnection connection, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null, bool buffered = true)
             where T1 : class, TReturn
         {
             var results = new Dictionary<int, T1>();
@@ -645,6 +666,7 @@ namespace Dommel
                 connection,
                 CreateMapDelegate<T1, T2, T3, T4, T5, T6, T7, TReturn>(results),
                 id: null,
+                tableNameResolver,
                 transaction,
                 buffered);
             return results.Values;
@@ -669,7 +691,7 @@ namespace Dommel
         /// or when the query is materialized (using <c>ToList()</c> for example).
         /// </param>
         /// <returns>The entity with the corresponding id joined with the specified types.</returns>
-        public static async Task<IEnumerable<TReturn>> GetAllAsync<T1, T2, T3, T4, T5, T6, T7, TReturn>(this IDbConnection connection, IDbTransaction? transaction = null, bool buffered = true)
+        public static async Task<IEnumerable<TReturn>> GetAllAsync<T1, T2, T3, T4, T5, T6, T7, TReturn>(this IDbConnection connection, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null, bool buffered = true)
             where T1 : class, TReturn
         {
             var results = new Dictionary<int, T1>();
@@ -677,6 +699,7 @@ namespace Dommel
                 connection,
                 CreateMapDelegate<T1, T2, T3, T4, T5, T6, T7, TReturn>(results),
                 id: null,
+                tableNameResolver,
                 transaction,
                 buffered);
             return results.Values;
