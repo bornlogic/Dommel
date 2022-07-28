@@ -10,7 +10,7 @@ namespace Dommel.Tests
         [Fact]
         public void Get()
         {
-            var sql = BuildGetById(SqlBuilder, typeof(Foo), new[] { (object)1 }, out var parameters);
+            var sql = BuildGetById(SqlBuilder, typeof(Foo), new[] { (object)1 }, new DefaultTableNameResolver(), out var parameters);
             Assert.Equal("select * from Foos where Id = #Id", sql);
             Assert.Single(parameters.ParameterNames);
         }
@@ -33,21 +33,21 @@ namespace Dommel.Tests
         [Fact]
         public void TestInsert()
         {
-            var sql = BuildInsertQuery(SqlBuilder, typeof(Foo));
+            var sql = BuildInsertQuery(SqlBuilder, typeof(Foo), new DefaultTableNameResolver());
             Assert.Equal("insert into Foos (Bar) values (#Bar); select last_insert_rowid() id", sql);
         }
 
         [Fact]
         public void TestUpdate()
         {
-            var sql = BuildUpdateQuery(SqlBuilder, typeof(Foo));
+            var sql = BuildUpdateQuery(SqlBuilder, typeof(Foo), new DefaultTableNameResolver());
             Assert.Equal("update Foos set Bar = #Bar where Id = #Id", sql);
         }
 
         [Fact]
         public void TestDelete()
         {
-            var sql = BuildDeleteQuery(SqlBuilder, typeof(Foo));
+            var sql = BuildDeleteQuery(SqlBuilder, typeof(Foo), new DefaultTableNameResolver());
             Assert.Equal("delete from Foos where Id = #Id", sql);
         }
 

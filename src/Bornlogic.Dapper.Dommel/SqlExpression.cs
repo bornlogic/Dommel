@@ -47,9 +47,9 @@ namespace Dommel
         /// Selects all columns from <typeparamref name="TEntity"/>.
         /// </summary>
         /// <returns>The current <see cref="SqlExpression{TEntity}"/> instance.</returns>
-        public virtual SqlExpression<TEntity> Select()
+        public virtual SqlExpression<TEntity> Select(ITableNameResolver tableNameResolver)
         {
-            _selectQuery = $"select * from {Resolvers.Table(typeof(TEntity), SqlBuilder)}";
+            _selectQuery = $"select * from {Resolvers.Table(typeof(TEntity), SqlBuilder, tableNameResolver)}";
             return this;
         }
 
@@ -59,7 +59,7 @@ namespace Dommel
         /// <param name="selector">The columns to select.
         /// E.g. <code>x => new { x.Foo, x.Bar }</code>.</param>
         /// <returns>The current <see cref="SqlExpression{TEntity}"/> instance.</returns>
-        public virtual SqlExpression<TEntity> Select(Func<TEntity, object> selector)
+        public virtual SqlExpression<TEntity> Select(Func<TEntity, object> selector, ITableNameResolver tableNameResolver)
         {
             if (selector == null)
             {
@@ -79,7 +79,7 @@ namespace Dommel
             var columns = props.Select(p => Resolvers.Column(p, SqlBuilder));
 
             // Create the select query
-            var tableName = Resolvers.Table(EntityType, SqlBuilder);
+            var tableName = Resolvers.Table(EntityType, SqlBuilder, tableNameResolver);
             _selectQuery = $"select {string.Join(", ", columns)} from {tableName}";
             return this;
         }

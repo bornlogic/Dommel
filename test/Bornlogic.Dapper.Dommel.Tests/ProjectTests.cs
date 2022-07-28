@@ -11,7 +11,7 @@ namespace Dommel.Tests
         [Fact]
         public void ProjectById()
         {
-            var sql = BuildProjectById(SqlBuilder, typeof(ProjectedFoo), 42, out var parameters);
+            var sql = BuildProjectById(SqlBuilder, typeof(ProjectedFoo), 42, new DefaultTableNameResolver(),out var parameters);
             Assert.Equal("select [Id], [Name], [DateUpdated] from [ProjectedFoos] where [Id] = @Id", sql);
             Assert.NotNull(parameters);
         }
@@ -19,14 +19,14 @@ namespace Dommel.Tests
         [Fact]
         public void ProjectAll()
         {
-            var sql = BuildProjectAllQuery(SqlBuilder, typeof(ProjectedFoo));
+            var sql = BuildProjectAllQuery(SqlBuilder, typeof(ProjectedFoo), new DefaultTableNameResolver());
             Assert.Equal("select [Id], [Name], [DateUpdated] from [ProjectedFoos]", sql);
         }
 
         [Fact]
         public void ProjectPaged()
         {
-            var sql = BuildProjectPagedQuery(SqlBuilder, typeof(ProjectedFoo), 1, 5);
+            var sql = BuildProjectPagedQuery(SqlBuilder, typeof(ProjectedFoo), new DefaultTableNameResolver(), 1, 5);
             Assert.Equal("select [Id], [Name], [DateUpdated] from [ProjectedFoos] order by [Id] offset 0 rows fetch next 5 rows only", sql);
         }
 

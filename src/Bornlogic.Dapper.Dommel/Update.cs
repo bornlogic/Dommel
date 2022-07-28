@@ -18,9 +18,9 @@ namespace Dommel
         /// <param name="entity">The entity in the database.</param>
         /// <param name="transaction">Optional transaction for the command.</param>
         /// <returns>A value indicating whether the update operation succeeded.</returns>
-        public static bool Update<TEntity>(this IDbConnection connection, TEntity entity, IDbTransaction? transaction = null)
+        public static bool Update<TEntity>(this IDbConnection connection, TEntity entity, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null)
         {
-            var sql = BuildUpdateQuery(GetSqlBuilder(connection), typeof(TEntity));
+            var sql = BuildUpdateQuery(GetSqlBuilder(connection), typeof(TEntity), tableNameResolver);
             LogQuery<TEntity>(sql);
             return connection.Execute(sql, entity, transaction) > 0;
         }
@@ -35,16 +35,16 @@ namespace Dommel
         /// <param name="transaction">Optional transaction for the command.</param>
         /// <param name="cancellationToken">Optional cancellation token for the command.</param>
         /// <returns>A value indicating whether the update operation succeeded.</returns>
-        public static async Task<bool> UpdateAsync<TEntity>(this IDbConnection connection, TEntity entity, IDbTransaction? transaction = null, CancellationToken cancellationToken = default)
+        public static async Task<bool> UpdateAsync<TEntity>(this IDbConnection connection, TEntity entity, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null, CancellationToken cancellationToken = default)
         {
-            var sql = BuildUpdateQuery(GetSqlBuilder(connection), typeof(TEntity));
+            var sql = BuildUpdateQuery(GetSqlBuilder(connection), typeof(TEntity), tableNameResolver);
             LogQuery<TEntity>(sql);
             return await connection.ExecuteAsync(new CommandDefinition(sql, entity, transaction: transaction, cancellationToken: cancellationToken)) > 0;
         }
 
-        internal static string BuildUpdateQuery(ISqlBuilder sqlBuilder, Type type)
+        internal static string BuildUpdateQuery(ISqlBuilder sqlBuilder, Type type, ITableNameResolver tableNameResolver)
         {
-            var tableName = Resolvers.Table(type, sqlBuilder);
+            var tableName = Resolvers.Table(type, sqlBuilder, tableNameResolver);
             var cacheKey = new QueryCacheKey(QueryCacheType.Update, sqlBuilder, type, tableName);
             if (!QueryCache.TryGetValue(cacheKey, out var sql))
             {

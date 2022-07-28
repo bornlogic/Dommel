@@ -11,18 +11,18 @@ namespace Dommel.Tests
         public void Select_AllProperties()
         {
             var sql = _sqlExpression
-                .Select()
+                .Select(new DefaultTableNameResolver())
                 .ToSql();
             Assert.Equal("select * from [Products]", sql);
         }
 
         [Fact]
-        public void Select_ThrowsForNullSelector() => Assert.Throws<ArgumentNullException>("selector", () => _sqlExpression.Select(null!));
+        public void Select_ThrowsForNullSelector() => Assert.Throws<ArgumentNullException>("selector", () => _sqlExpression.Select(null!, new DefaultTableNameResolver()));
 
         [Fact]
         public void Select_ThrowsForEmptyProjection()
         {
-            var ex = Assert.Throws<ArgumentException>("selector", () => _sqlExpression.Select(x => new object()));
+            var ex = Assert.Throws<ArgumentException>("selector", () => _sqlExpression.Select(x => new object(), new DefaultTableNameResolver()));
             Assert.Equal(new ArgumentException("Projection over type 'Product' yielded no properties.", "selector").Message, ex.Message);
         }
 
@@ -30,7 +30,7 @@ namespace Dommel.Tests
         public void Select_SingleProperty()
         {
             var sql = _sqlExpression
-                .Select(p => new { p.Id })
+                .Select(p => new { p.Id }, new DefaultTableNameResolver())
                 .ToSql();
             Assert.Equal("select [Id] from [Products]", sql);
         }
@@ -39,7 +39,7 @@ namespace Dommel.Tests
         public void Select_MultipleProperties()
         {
             var sql = _sqlExpression
-                .Select(p => new { p.Id, p.Name })
+                .Select(p => new { p.Id, p.Name }, new DefaultTableNameResolver())
                 .ToSql();
             Assert.Equal("select [Id], [Name] from [Products]", sql);
         }

@@ -26,9 +26,9 @@ namespace Dommel
         /// A collection of entities of type <typeparamref name="TEntity"/> matching the specified
         /// <paramref name="predicate"/>.
         /// </returns>
-        public static IEnumerable<TEntity> Select<TEntity>(this IDbConnection connection, Expression<Func<TEntity, bool>> predicate, IDbTransaction? transaction = null, bool buffered = true)
+        public static IEnumerable<TEntity> Select<TEntity>(this IDbConnection connection, Expression<Func<TEntity, bool>> predicate, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null, bool buffered = true)
         {
-            var sql = BuildSelectSql(connection, predicate, out var parameters);
+            var sql = BuildSelectSql(connection, predicate, tableNameResolver, out var parameters);
             LogQuery<TEntity>(sql);
             return connection.Query<TEntity>(sql, parameters, transaction, buffered);
         } 
@@ -44,10 +44,10 @@ namespace Dommel
         /// A instance of type <typeparamref name="TEntity"/> matching the specified
         /// <paramref name="predicate"/>.
         /// </returns>
-        public static TEntity FirstOrDefault<TEntity>(this IDbConnection connection, Expression<Func<TEntity, bool>> predicate, IDbTransaction? transaction = null)
+        public static TEntity FirstOrDefault<TEntity>(this IDbConnection connection, Expression<Func<TEntity, bool>> predicate, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null)
             where TEntity : class
         {
-            var sql = BuildSelectSql(connection, predicate, out var parameters);
+            var sql = BuildSelectSql(connection, predicate, tableNameResolver, out var parameters);
             LogQuery<TEntity>(sql);
             return connection.QueryFirstOrDefault<TEntity>(sql, parameters, transaction);
         }
@@ -71,14 +71,14 @@ namespace Dommel
         /// <paramref name="predicate"/>.
         /// </returns>
         public static IEnumerable<TEntity> SelectPaged<TEntity>(this IDbConnection connection, 
-            Expression<Func<TEntity, bool>> predicate, 
+            Expression<Func<TEntity, bool>> predicate, ITableNameResolver tableNameResolver, 
             int pageNumber, 
             int pageSize, 
             IDbTransaction? transaction = null,
             bool buffered = true,
             string orderBy = null)
         {
-            var sql = BuildSelectPagedQuery(connection, predicate, pageNumber, pageSize, out var parameters, orderBy);
+            var sql = BuildSelectPagedQuery(connection, predicate, tableNameResolver, pageNumber, pageSize, out var parameters, orderBy);
             LogQuery<TEntity>(sql);
             return connection.Query<TEntity>(sql, parameters, transaction, buffered);
         }
@@ -99,28 +99,28 @@ namespace Dommel
         /// <paramref name="predicate"/>.
         /// </returns>
         public static Task<IEnumerable<TEntity>> SelectPagedAsync<TEntity>(this IDbConnection connection, 
-            Expression<Func<TEntity, bool>> predicate, 
+            Expression<Func<TEntity, bool>> predicate, ITableNameResolver tableNameResolver, 
             int pageNumber,
             int pageSize, 
             IDbTransaction? transaction = null, 
             CancellationToken cancellationToken = default,
             string orderBy = null)
         {
-            var sql = BuildSelectPagedQuery(connection, predicate, pageNumber, pageSize, out var parameters, orderBy);
+            var sql = BuildSelectPagedQuery(connection, predicate, tableNameResolver, pageNumber, pageSize, out var parameters, orderBy);
             LogQuery<TEntity>(sql);
             return connection.QueryAsync<TEntity>(new CommandDefinition(sql, parameters, transaction, cancellationToken: cancellationToken));
         }
 
         private static string BuildSelectPagedQuery<TEntity>(
             IDbConnection connection, 
-            Expression<Func<TEntity, bool>> predicate, 
+            Expression<Func<TEntity, bool>> predicate, ITableNameResolver tableNameResolver, 
             int pageNumber, 
             int pageSize, 
             out DynamicParameters parameters,
             string orderBy = null)
         {
             // Start with the select query part
-            var sql = BuildSelectSql(connection, predicate, out parameters);
+            var sql = BuildSelectSql(connection, predicate, tableNameResolver, out parameters);
 
             // Append the paging part including the order by
             if (string.IsNullOrWhiteSpace(orderBy))
@@ -135,12 +135,12 @@ namespace Dommel
             return sql;
         }
 
-        private static string BuildSelectSql<TEntity>(IDbConnection connection, Expression<Func<TEntity, bool>> predicate, out DynamicParameters parameters)
+        private static string BuildSelectSql<TEntity>(IDbConnection connection, Expression<Func<TEntity, bool>> predicate, ITableNameResolver tableNameResolver, out DynamicParameters parameters)
         {
             var type = typeof(TEntity);
 
             // Build the select all part
-            var sql = BuildGetAllQuery(connection, type);
+            var sql = BuildGetAllQuery(connection, type, tableNameResolver);
 
             // Append the where statement
             sql += CreateSqlExpression<TEntity>(GetSqlBuilder(connection))
