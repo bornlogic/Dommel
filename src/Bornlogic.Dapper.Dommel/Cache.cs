@@ -18,14 +18,15 @@ namespace Dommel
         Any,
     }
 
-    internal struct QueryCacheKey : IEquatable<QueryCacheKey>
+    internal readonly struct QueryCacheKey : IEquatable<QueryCacheKey>
     {
-        public QueryCacheKey(QueryCacheType cacheType, ISqlBuilder sqlBuilder, MemberInfo memberInfo, string tableName)
+        public QueryCacheKey(QueryCacheType cacheType, ISqlBuilder sqlBuilder, MemberInfo memberInfo, string tableName, string extraData = null)
         {
             SqlBuilderType = sqlBuilder.GetType();
             CacheType = cacheType;
             MemberInfo = memberInfo;
             TableName = tableName;
+            ExtraData = extraData;
         }
 
         public QueryCacheType CacheType { get; }
@@ -38,11 +39,13 @@ namespace Dommel
         /// Table name with schema
         /// </summary>
         public string TableName { get; }
+        public string ExtraData { get; }
 
-        public bool Equals(QueryCacheKey other) => 
-            CacheType == other.CacheType && 
-            SqlBuilderType == other.SqlBuilderType && 
-            MemberInfo == other.MemberInfo &&
-            TableName == other.TableName;
+        public bool Equals(QueryCacheKey other) =>
+            CacheType == other.CacheType &&
+                SqlBuilderType == other.SqlBuilderType &&
+                MemberInfo == other.MemberInfo &&
+                TableName == other.TableName &&
+                ExtraData == other.ExtraData;
     }
 }

@@ -8,7 +8,7 @@ namespace Dommel
     public class SqliteSqlBuilder : ISqlBuilder
     {
         /// <inheritdoc/>
-        public virtual string BuildInsert(Type type, string tableName, string[] columnNames, string[] paramNames) =>
+        public virtual string BuildInsert(Type type, string tableName, string[] columnNames, string[] paramNames, bool returnKeys = true) =>
             $"insert into {tableName} ({string.Join(", ", columnNames)}) values ({string.Join(", ", paramNames)}); select last_insert_rowid() id";
 
         /// <inheritdoc/>

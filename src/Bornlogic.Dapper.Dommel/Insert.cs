@@ -66,6 +66,7 @@ namespace Dommel
         /// <param name="entities">The entities to be inserted.</param>
         /// <param name="transaction">Optional transaction for the command.</param>
         /// <param name="cancellationToken">Optional cancellation token for the command.</param>
+        /// <param name="tableNameResolver">Table name resolver.</param>
         public static Task InsertAllAsync<TEntity>(this IDbConnection connection, IEnumerable<TEntity> entities, ITableNameResolver tableNameResolver, IDbTransaction? transaction = null, CancellationToken cancellationToken = default)
             where TEntity : class
         {
@@ -74,10 +75,10 @@ namespace Dommel
             return connection.ExecuteAsync(new CommandDefinition(sql, entities, transaction: transaction, cancellationToken: cancellationToken));
         }
 
-        internal static string BuildInsertQuery(ISqlBuilder sqlBuilder, Type type, ITableNameResolver tableNameResolver)
+        public static string BuildInsertQuery(ISqlBuilder sqlBuilder, Type type, ITableNameResolver tableNameResolver, bool returnKeys = true)
         {
             var tableName = Resolvers.Table(type, sqlBuilder, tableNameResolver);
-            var cacheKey = new QueryCacheKey(QueryCacheType.Insert, sqlBuilder, type, tableName);
+            var cacheKey = new QueryCacheKey(QueryCacheType.Insert, sqlBuilder, type, tableName, returnKeys.ToString());
             if (QueryCache.TryGetValue(cacheKey, out var sql)) return sql;
             
             // Use all non-key and non-generated properties for inserts
@@ -90,7 +91,7 @@ namespace Dommel
             var columnNames = typeProperties.Select(p => Resolvers.Column(p, sqlBuilder)).ToArray();
             var paramNames = typeProperties.Select(p => sqlBuilder.PrefixParameter(p.Name)).ToArray();
 
-            sql = sqlBuilder.BuildInsert(type, tableName, columnNames, paramNames);
+            sql = sqlBuilder.BuildInsert(type, tableName, columnNames, paramNames, returnKeys);
 
             QueryCache.TryAdd(cacheKey, sql);
 
