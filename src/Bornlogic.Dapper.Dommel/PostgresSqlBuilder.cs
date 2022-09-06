@@ -9,7 +9,7 @@ namespace Dommel
     public class PostgresSqlBuilder : ISqlBuilder
     {
         /// <inheritdoc/>
-        public virtual string BuildInsert(Type type, string tableName, string[] columnNames, string[] paramNames)
+        public virtual string BuildInsert(Type type, string tableName, string[] columnNames, string[] paramNames, bool returnKeys = true)
         {
             if (type == null)
             {
@@ -18,7 +18,9 @@ namespace Dommel
 
             var sql = $"insert into {tableName} ({string.Join(", ", columnNames)}) values ({string.Join(", ", paramNames)}) ";
 
-            var keyColumns = Resolvers.KeyProperties(type).Where(p => p.IsGenerated).Select(p => Resolvers.Column(p.Property, this));
+            if (!returnKeys) return sql;
+
+            var keyColumns = Resolvers.KeyProperties(type).Where(p => p.IsGenerated).Select(p => Resolvers.Column(p.Property, this)).ToList();
             if (keyColumns.Any())
             {
                 sql += $"returning ({string.Join(", ", keyColumns)})";

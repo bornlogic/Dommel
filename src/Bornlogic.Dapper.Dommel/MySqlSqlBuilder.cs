@@ -8,7 +8,7 @@ namespace Dommel
     public class MySqlSqlBuilder : ISqlBuilder
     {
         /// <inheritdoc/>
-        public virtual string BuildInsert(Type type, string tableName, string[] columnNames, string[] paramNames) =>
+        public virtual string BuildInsert(Type type, string tableName, string[] columnNames, string[] paramNames, bool returnKeys = true) =>
             $"insert into {tableName} ({string.Join(", ", columnNames)}) values ({string.Join(", ", paramNames)}); select LAST_INSERT_ID() id";
 
         /// <inheritdoc/>

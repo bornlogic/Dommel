@@ -21,8 +21,9 @@ namespace Dommel
         /// <param name="tableName">The name of the table to query.</param>
         /// <param name="columnNames">The names of the columns in the table.</param>
         /// <param name="paramNames">The names of the parameters in the database command.</param>
+        /// <param name="returnKeys">Returns the inserted key values.</param>
         /// <returns>An insert query including a query to fetch the new ID.</returns>
-        string BuildInsert(Type type, string tableName, string[] columnNames, string[] paramNames);
+        string BuildInsert(Type type, string tableName, string[] columnNames, string[] paramNames, bool returnKeys = true);
 
         /// <summary>
         /// Builds the paging part to be appended to an existing select query.
