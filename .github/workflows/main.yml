@@ -34,7 +34,7 @@ jobs:
 
   build:
     name: Publish
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-lastest
     needs: test
     env:
       LAST_COMMITTER_EMAIL: $(git log -1 --pretty=format:'%ae')
