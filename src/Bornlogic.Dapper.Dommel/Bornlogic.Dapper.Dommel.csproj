@@ -3,7 +3,7 @@
     <Description>Simple CRUD operations for Dapper.</Description>
     <PackageTags>dommel;crud;dapper;database;orm</PackageTags>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <Version>2.0.3</Version>
+    <Version>2.0.4</Version>
     <RepositoryUrl>https://github.com/bornlogic/bornlogic-dapper-dommel</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
